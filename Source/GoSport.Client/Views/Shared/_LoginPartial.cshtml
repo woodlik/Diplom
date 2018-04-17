@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Выйти", "Account", new  { area = "" },FormMethod.Post,new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <img src="@String.Format("../../../Content/Avatars/{0}.jpg", this.User.Identity.GetUserName())" 
+                 onError="this.onerror = null; this.src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRQYvnZBfeVGEm4cbMDXLlr-xOat9DQungOjV8sUGPcHgE1u3BE';"
+                 width="50" height="50" 
+                 style="margin-top:5px"/>
+        </li>
+        <li>
+            @Html.ActionLink("Привет, " + User.Identity.GetUserName() + "!", "Profile", "Users", new { area = "Users",id= User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Регистрация", "Register", "Account", new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Войти", "Login", "Account", new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

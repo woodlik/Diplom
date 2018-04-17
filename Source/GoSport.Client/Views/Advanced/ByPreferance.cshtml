@@ -1,0 +1,48 @@
+﻿@using GoSport.Client.ViewModels.SportCenters
+@using GoSport.Client.ViewModels
+@model IEnumerable<SportCenterViewModel>
+
+@using (Html.BeginForm("ByPreferance", "Advanced", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h2>Фильтрация данных</h2>
+    <hr />
+    <div class="row">
+        <div class="row col-md-offset-1">@{Html.RenderPartial("_AddressPartial", new AddressViewModel());}</div>
+        <div class="row col-md-offset-3">@{Html.RenderPartial("_SportCategoriesPartial");}</div>
+        <br />
+        <div class="row col-md-offset-4">
+            <input type="submit" class="btn btn-default" value=" Search" />
+        </div>
+    </div>
+    <hr />
+            }
+@using (Html.BeginForm("BySortPreferance", "Advanced", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <h2>Sort by</h2>
+        <div class="row">
+            <select class="form-control row col-md-offset-3" name="sortParam">
+                <option name="Date" value="Date">Дата</option>
+                <option name="Rating" value="Rating">Рейтинг</option>
+                <option name="Date" value="Most comments">Наибольшее количество комментариев</option>
+                <option name="Rating" value="Name">Название</option>
+            </select>
+            <br />
+            <div class="row col-md-offset-4">
+                <input type="submit" class="btn btn-default" value=" Sort" />
+            </div>
+        </div>
+}
+@if (Model.Count() == 0)
+{
+    <hr />
+    <div>Нет подходящего результата по вашему запросу</div>
+}
+@foreach (var sportCenter in Model)
+{
+    Html.RenderPartial("_SportCenterDetailsPartial", sportCenter);
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

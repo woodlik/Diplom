@@ -1,0 +1,7 @@
+﻿@using GoSport.Client.ViewModels.Users
+@model UserProfileViewModel
+<a href='@String.Format("/Users/Users/Profile/{0}",Model.Id)'>
+        <img src="@String.Format("/Content/Avatars/{0}.jpg",Model.UserName)"
+             onError="this.onerror = null; this.src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRQYvnZBfeVGEm4cbMDXLlr-xOat9DQungOjV8sUGPcHgE1u3BE';"
+             alt="avatar" height=70 width=70 class="img-rounded" />
+</a>

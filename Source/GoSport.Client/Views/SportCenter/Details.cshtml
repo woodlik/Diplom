@@ -1,0 +1,85 @@
+﻿@using GoSport.Client.ViewModels.SportCenters;
+@using GoSport.Client.ViewModels;
+@using Microsoft.AspNet.Identity;
+@model SportCenterViewModel
+@{
+    ViewBag.Title = "Details";
+}
+<script src="~/Scripts/ImageSlider/jquery.bxslider.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<hr />
+<div class="container">
+    @{
+        Html.RenderPartial("_SportCenterInfoPartial", Model);
+    }
+</div>
+<h2 class="row text-center">Рейтинг заведения!</h2>
+<div class="rating-container">
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Комфорт: </div>
+        <div class="col-md-2">@(Model.Rating.Comfort != 0 ? String.Format("{0:0.00}", Model.Rating.Comfort) : "Not rated yet...") </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            Html.RenderPartial("_RatingPartial", new RatingViewModel { SportCenterId = Model.Id, RatingType = "Comfort" });
+        }
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Цены: </div>
+        <div class="col-md-2">@(Model.Rating.Price != 0 ? String.Format("{0:0.00}", Model.Rating.Price) : "Not rated yet...") </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            Html.RenderPartial("_RatingPartial", new RatingViewModel { SportCenterId = Model.Id, RatingType = "Price" });
+        }
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Оказание услуг: </div>
+        <div class="col-md-2">@(Model.Rating.Service != 0 ? String.Format("{0:0.00}",Model.Rating.Service) : "Not rated yet...") </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            Html.RenderPartial("_RatingPartial", new RatingViewModel { SportCenterId = Model.Id, RatingType = "Service" });
+        }
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Тренер/Тренеры: </div>
+        <div class="col-md-2">@(Model.Rating.Trainers != 0 ? String.Format("{0:0.00}", Model.Rating.Trainers) : "Not rated yet...") </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            Html.RenderPartial("_RatingPartial", new RatingViewModel { SportCenterId = Model.Id, RatingType = "Trainers" });
+        }
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Общий: </div>
+        <div class="col-md-2">@(Model.Rating.Total != 0 ? String.Format("{0:0.00}", Model.Rating.Total) : "Not rated yet...") </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            Html.RenderPartial("_RatingPartial", new RatingViewModel { SportCenterId = Model.Id, RatingType = "Total" });
+        }
+    </div>
+</div>
+<div id="comments">
+    @Html.Partial("_AllCommentsPartial", Model.Comments);
+</div>
+<br />
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.Partial("_AddCommentPartial", Model.Id);
+}
+
+<script src="~/Scripts/ImageSlider/jquery.bxslider.min.js"></script>
+<link href="~/Content/ImageSlider/jquery.bxslider.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $('.bxslider').bxSlider(
+            {
+                pagerCustom: '#bx-pager',
+                adaptiveHeight: true,
+                slideWidth: 800,
+                auto: true
+            });
+    });
+</script>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/jqueryval")
+}

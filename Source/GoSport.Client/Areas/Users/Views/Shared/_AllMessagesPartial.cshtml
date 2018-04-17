@@ -1,0 +1,28 @@
+﻿@using GoSport.Data.Models
+@model IEnumerable<Message>
+<h1 class="row text-center">Сообщения</h1>
+@if (Model.OrderByDescending(x => x.CreatedOn).ToList().Count() == 0)
+{
+        <<div class="row text-center">Пока нет ответов...</div>
+}
+else
+{
+    var messages = Model.OrderBy(x => x.CreatedOn).ToList();
+    foreach (var message in messages)
+    {
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 comment">
+                <div class="row">
+                    <div class="col-md-3">@message.Author.Name:  </div>
+                    <div class="col-md-9">"@message.Content"</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Дата создания:  </div>
+                    <i class="col-md-4">@message.CreatedOn</i>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    }
+}

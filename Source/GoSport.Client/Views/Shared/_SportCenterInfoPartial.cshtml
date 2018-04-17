@@ -1,0 +1,34 @@
+﻿@using GoSport.Client.ViewModels.SportCenters
+@model SportCenterViewModel
+<div class="sport-center-info">
+    <h1 class="col text-center"><a href="/SportCenter/Details/@Model.Id">@Model.Name</a></h1>
+    <ul class="bxslider">
+        @foreach (var img in Model.Images)
+            {
+            <li><img src="@img" height=300 width=300 class="img-rounded" /></li>
+        }
+    </ul>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Exact Address: </div>
+        <div class="col-md-4">@Model.ExactAddress</div>
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Город: </div>
+        <a href="\Advanced\ByPreferance?City=@Model.Address.City" class="badge">@Model.Address.City</a>
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Станция метро: </div>
+        <a href="\Advanced\ByPreferance?Neighbour=@Model.Address.Neighborhood" class="badge">@Model.Address.Neighborhood</a>
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Информация: </div>
+        <div class="col-md-8">@Model.Description   </div>
+    </div>
+    <div class="row col-md-offset-3">
+        <div class="col-md-2">Виды занятий: </div>
+        @foreach (var item in Model.Categories)
+            {
+            <a href="\Advanced\ByPreferance?category=@item.Name" class="badge">@item.Name</a>
+        }
+    </div>
+</div>

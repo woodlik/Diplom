@@ -1,0 +1,82 @@
+﻿@using GoSport.Client.ViewModels.SportCenters;
+@model IEnumerable<SportCenterViewModel>
+@{
+    ViewBag.Title = "Add Sport center";
+}
+@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/ImageSlider/jquery.bxslider.js"></script>
+<div class="jumbotron wallpaper">
+    <h1 class="text-center">GO SPORT</h1>
+    <p class="lead text-center">
+        Сайт, где вы можете найти место для занятий любимым видом спорта!
+    </p>
+    <p></p>
+    <p class="text-center"><a href="/Home/About" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+@foreach (var center in Model)
+{
+
+    <hr />
+    <div class="container">
+        @{
+            Html.RenderPartial("_SportCenterInfoPartial", center);
+        }
+        <div class="row col-md-offset-3">
+            <div class="col-md-2">Рейтинг: </div>
+            <div class="col-md-7">
+                @if (center.Rating != null)
+                {
+                    <div class="text-le">@(center.Rating.Total != 0 ? String.Format("{0:0.00}", center.Rating.Total) : "Not rated yet...") </div>
+                }
+                else
+                {
+                    <div>
+                        Еще не оценено...
+                    </div>
+                }
+            </div>
+        </div>
+        @{ViewBag.CommentAuthor = @center.Comments.OrderByDescending(x => x.CreatedOn).FirstOrDefault();}
+        @if (ViewBag.CommentAuthor != null)
+        {
+            <h1 class="row text-center">Last Comment</h1>
+            <div class="row col-md-offset-3">
+                <div class="col-md-2">@ViewBag.CommentAuthor.Author.Name:  </div>
+                <div class="col-md-2">"@ViewBag.CommentAuthor.Content"</div>
+            </div>
+            <div class="row col-md-offset-3">
+                <div class="col-md-2">Дата создания:  </div>
+                <i class="col-md-4">@ViewBag.CommentAuthor.CreatedOn</i>
+            </div>
+        }
+        <br />
+        <div class="row col-md-offset-5">
+            <a href="/SportCenter/Details/@center.Id" class="btn btn-primary text-center">Show More</a>
+        </div>
+    </div>
+            }
+<hr />
+<div class="row col-md-offset-5">
+    @for (int i = 1; i < (ViewBag.AllSportCentersCount / ViewBag.ItemsPerPage) + 2; i++)
+    {
+        <a class="btn btn-primary" href='@String.Format("/Home/Index/{0}",@i)'>@i</a>
+    }
+</div>
+<script src="~/Scripts/ImageSlider/jquery.bxslider.min.js"></script>
+<link href="~/Content/ImageSlider/jquery.bxslider.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $('.bxslider').bxSlider(
+            {
+                pagerCustom: '#bx-pager',
+                adaptiveHeight: true,
+                slideWidth: 800,
+                auto: true
+            });
+    });
+</script>
+
+
+

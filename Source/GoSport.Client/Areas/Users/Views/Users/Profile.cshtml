@@ -1,0 +1,76 @@
+﻿@using GoSport.Client.ViewModels.Users
+@using Microsoft.AspNet.Identity;
+@using System.Linq;
+@model UserProfileViewModel
+<script src="~/Scripts/ImageSlider/jquery.bxslider.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<h1>@Model.Name</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@String.Format("/Content/Avatars/{0}.jpg", Model.UserName)"
+                 onError="this.onerror = null; this.src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRQYvnZBfeVGEm4cbMDXLlr-xOat9DQungOjV8sUGPcHgE1u3BE';"
+                 alt="avatar" height=300 width=300 class="img-rounded" />
+        </div>
+        <div class="col-md-8 control-label lead">
+            <div class="col-md-3">Логин пользователя:</div>
+            <div class="col-md-3">@Model.Name</div>
+        </div>
+        <div class="col-md-8 control-label lead">
+            <div class="col-md-3">Город :</div>
+            <div class="col-md-3"><a href="\Advanced\ByPreferance?City=@Model.City" class="badge">@Model.City</a></div>
+        </div>
+        <div class="col-md-8 control-label lead">
+            <div class="col-md-3">Станция метро:</div>
+            <div class="col-md-3"><a href="\Advanced\ByPreferance?Neighbour=@Model.Neighborhood" class="badge">@Model.Neighborhood</a></div>
+        </div>
+        <div class="col-md-8 control-label lead">
+            <div class="col-md-3">Содержание :</div>
+            @if (Model.AboutMe != null)
+            {
+                <div class="col-md-6">@Model.AboutMe</div>
+            }
+            else
+            {
+                <div class="col-md-6">Нет добавленной информации...</div>
+            }
+        </div>
+        <div class="col-md-8 control-label lead">
+            <div class="col-md-3">Facebook :</div>
+            @if (Model.Facebook != null)
+            {
+                <a href="@Model.Facebook" class="col-md-6">facebook профиль</a>
+            }
+            else
+            {
+                <div class="col-md-6">No Facebook added...</div>
+            }
+        </div>
+        <div class="col-md-8 control-label lead">
+            <div class="col-md-3">Предпочитаемые виды спорта :</div>
+            @if (Model.FavouriteCategories != null)
+            {
+                foreach (var category in Model.FavouriteCategories)
+                {
+                    <a href="\Advanced\ByPreferance?category=@category.Name" class="badge">@category.Name</a>
+                }
+            }
+            else
+            {
+                <div class="col-md-6">Предпочитаемые виды спорта не добавлены...</div>
+            }
+        </div>
+    </div>
+</div>
+<hr />
+@if (Model.Id != User.Identity.GetUserId())
+{
+    <div id="messages">
+        @Html.Partial("_AllMessagesPartial", Model.Messages);
+    </div>
+    <br />
+    @Html.Partial("_AddMessagePartial", Model.Id);
+}
+
+
+

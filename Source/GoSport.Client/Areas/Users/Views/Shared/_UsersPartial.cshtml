@@ -1,0 +1,46 @@
+﻿@using GoSport.Client.ViewModels.Users
+@using Microsoft.AspNet.Identity;
+@model UserProfileViewModel
+    <hr />
+<div class="row">
+    <div class="col-md-1">
+        @{Html.RenderPartial("_BigAvatarPartial", Model); }
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-2">Название: </div>
+            <a href="\Users\Users\Profile\@Model.Id" class="badge">@Model.Name</a>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Город: </div>
+            <a href="\Advanced\ByPreferance?City=@Model.City" class="badge">@Model.City</a>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Станция метро: </div>
+            <a href="\Advanced\ByPreferance?Neighbour=@Model.Neighborhood" class="badge">@Model.Neighborhood</a>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Facebook: </div>
+            @if (Model.Facebook != null)
+            {
+                <a href="\Advanced\ByPreferance?Neighbour=@Model.Facebook" class="badge">@Model.Facebook</a>
+            }
+            else
+            {
+                <div>Нет добавленных соцсетей...</div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-2">Виды спорта: </div>
+            @foreach (var item in Model.FavouriteCategories)
+            {
+                <a href="\Advanced\ByPreferance?category=@item.Name" class="badge">@item.Name</a>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/jqueryval")
+}

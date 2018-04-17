@@ -1,0 +1,9 @@
+﻿<div class="col-md-10">
+    @(Html.Kendo().AutoComplete()
+          .Name("SportCategories")
+          .Filter("startswith")
+          .Placeholder("Введите свое название...")
+          .BindTo(ViewBag.Categories)
+          .Separator(",")
+    )
+</div>

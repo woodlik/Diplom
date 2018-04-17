@@ -1,0 +1,39 @@
+﻿@using GoSport.Client.ViewModels.SportCenters
+@using GoSport.Client.ViewModels
+@model SportCenterViewModel
+
+<hr />
+<div class="row">
+    <div class="col-md-1">
+        <a href='@String.Format("/SportCenter/Details/{0}",Model.Id)'>
+            @if (Model.Images.Count > 0)
+            {<img src="@Model.Images.First()" alt="avatar" height=70 width=70 class="img-rounded" />}
+        </a>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-2">Название: </div>
+            <a href="\SportCenter\Details\@Model.Id" class="badge">@Model.Name</a>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Город: </div>
+            <a href="\Advanced\ByPreferance?City=@Model.Address.City" class="badge">@Model.Address.City</a>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Станция метро: </div>
+            <a href="\Advanced\ByPreferance?Neighbour=@Model.Address.Neighborhood" class="badge">@Model.Address.Neighborhood</a>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Виды занятий: </div>
+            @foreach (var item in Model.Categories)
+            {
+                <a href="\Advanced\ByPreferance?category=@item.Name" class="badge">@item.Name</a>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-2">Рейтинг: </div>
+            @if (Model.Rating != null)
+            { <div class="col-md-2">@(Model.Rating.Total != 0 ? String.Format("{0:0.00}", Model.Rating.Total) : "Not rated yet...") </div>}
+        </div>
+    </div>
+</div>

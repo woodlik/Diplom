@@ -1,0 +1,70 @@
+﻿@using GoSport.Data.Models;
+@using GoSport.Client.ViewModels;
+@using GoSport.Client.ViewModels.SportCenters;
+@model AddSportCenterViewModel
+@{
+    ViewBag.Title = "Add Sport center";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Add", "SportCenter", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <p>
+        Имейте в виду, что добавление нового спортивного центра всегда проверяется дважды администратором. Поэтому убедитесь, что номер телефона указан правильно!
+    </p>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, "Название *", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @value = "dasdsadsa" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber, "Номер телефона *", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @value = "qwerty" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, "Информация *", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @value = "ddasdasd", @rows = 5 })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UplodadedImage1, "Изображения", new { @class = "col-md-2 control-label", @style="padding-top:0px"})
+        <div class="col-md-5 upload">
+            <input type="file" name="UplodadedImage1" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="btn btn-primary" id="add-image-button">Add more pcitures</div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExactAddress, "Точный адрес *", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ExactAddress, new { @class = "form-control", @value = "dasdsadsa@adfsf.bg" })
+        </div>
+    </div>
+    Html.RenderPartial("_AddressPartial");
+    <div class="form-group">
+        @Html.LabelFor(m => m.SportCategories, new { @class = "col-md-2 control-label" })
+        @{Html.RenderPartial("_SportCategoriesPartial");
+        }
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn  btn-primary" value="Register sport center" />
+        </div>
+    </div>
+            }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

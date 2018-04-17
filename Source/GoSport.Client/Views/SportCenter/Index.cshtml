@@ -1,0 +1,16 @@
+﻿
+@(Html.Kendo().Grid<GoSport.Client.ViewModels.SportCenters.SportCenterViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.ExactAddress);
+        columns.Bound(c => c.Description);
+        columns.Bound(c => c.PhoneNumber);
+      })
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Read(read => read.Action("SportCenters_Read", "SportCenter"))
+      )
+)
